@@ -10,9 +10,8 @@
 
 int main()
 {
-	KeyboardHook mHook;
 
-	while (mHook.isActive()) {
+	while (KeyboardHook::getInstance().isActive()) {
 
 	}
 

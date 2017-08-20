@@ -2,6 +2,9 @@
 #include <Windows.h>
 #include <iostream>
 /*
+	This class is a Singleton because it makes use of a system wide callback, so
+	only one instance of this class may exist.
+
 	TODO: Make sure exceptions are gracefully handled.
 	(Especially important if this process is supposed to be hidden)
 	
@@ -18,13 +21,28 @@
 
 class KeyboardHook
 {
-public:
-	KeyboardHook();
-	~KeyboardHook();
+public:	
+	static KeyboardHook& getInstance();
+
+
 	bool isActive();
+	~KeyboardHook();
 private:
+	KeyboardHook();
+	
+
+	//Higher level Keyup/Keydown methods.
+	void Keydown(DWORD virtualKey, DWORD scanCode);
+	void Keyup(DWORD virtualKey, DWORD scanCode);
+
+	//Windows Low-level Keyboard hook callback function
 	static LRESULT CALLBACK LowLevelKeyboardProc(int nCode, WPARAM wParam, LPARAM lParam);
+
+	//Private keyboard hook variables.
 	HHOOK hhkLowLevelKybd;
 	MSG msg;
+
+	//Singleton instance variable.
+	static KeyboardHook* mInstance;
 };
 
