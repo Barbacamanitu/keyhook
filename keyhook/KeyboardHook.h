@@ -1,6 +1,8 @@
 #pragma once
 #include <Windows.h>
 #include <iostream>
+#include <vector>
+#include <functional>
 /*
 	This class is a Singleton because it makes use of a system wide callback, so
 	only one instance of this class may exist.
@@ -25,11 +27,14 @@ public:
 	void registerHook();
 	void unregisterHook();
 	static KeyboardHook& getInstance();
-	
+	std::vector<std::function<void(DWORD, DWORD)>> keyUpObservers;
 private:
 	KeyboardHook();
 	~KeyboardHook();
+
+	std::vector<std::function<void(DWORD, DWORD)>> keyDownObservers;
 	
+
 
 	//Higher level Keyup/Keydown methods.
 	void Keydown(DWORD virtualKey, DWORD scanCode);

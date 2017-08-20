@@ -8,7 +8,11 @@ void KeyboardHook::Keydown(DWORD virtualKey, DWORD scanCode){
 }
 
 void KeyboardHook::Keyup(DWORD virtualKey, DWORD scanCode){
-	std::cout << "Keyup!" << std::endl;
+	//std::cout << "Keyup!" << std::endl;
+	//Iterate through all observers and execute them with the correct key info.
+	for (auto f : keyUpObservers) {
+		f(virtualKey, scanCode);
+	}
 }
 
 
