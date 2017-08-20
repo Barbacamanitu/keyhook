@@ -35,7 +35,14 @@ KeyboardHook::~KeyboardHook()
 	UnhookWindowsHookEx(hhkLowLevelKybd);
 }
 
-//Low level system callback related methods below this line.
+
+
+
+/*
+	Low level system callback related methods below this line.
+	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*/
+
 LRESULT CALLBACK KeyboardHook::LowLevelKeyboardProc(int nCode, WPARAM wParam, LPARAM lParam) {
 	if (nCode == HC_ACTION)
 	{
