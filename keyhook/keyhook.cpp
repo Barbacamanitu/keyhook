@@ -11,9 +11,11 @@
 int main()
 {
 
+	KeyboardHook::getInstance().registerHook();
 	while (KeyboardHook::getInstance().isActive()) {
 
 	}
+	KeyboardHook::getInstance().unregisterHook();
 
 	std::cout << "Done" << std::endl;
 	system("pause");

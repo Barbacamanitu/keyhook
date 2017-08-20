@@ -19,24 +19,13 @@ KeyboardHook& KeyboardHook::getInstance()
 	return instance;
 }
 
-//Single instance.
-KeyboardHook* KeyboardHook::mInstance = nullptr;
-
-//Constructor. Registers callback.
-KeyboardHook::KeyboardHook()
-{
-	// Install the low-level keyboard & mouse hooks
-	hhkLowLevelKybd = SetWindowsHookEx(WH_KEYBOARD_LL, KeyboardHook::LowLevelKeyboardProc, 0, 0);
+//Constructor.
+KeyboardHook::KeyboardHook() {
 }
 
-//Destructor. Destroys callback.
-KeyboardHook::~KeyboardHook()
-{
-	UnhookWindowsHookEx(hhkLowLevelKybd);
+//Destructor.
+KeyboardHook::~KeyboardHook() {
 }
-
-
-
 
 /*
 	Low level system callback related methods below this line.
@@ -70,6 +59,18 @@ LRESULT CALLBACK KeyboardHook::LowLevelKeyboardProc(int nCode, WPARAM wParam, LP
 	return (CallNextHookEx(NULL, nCode, wParam, lParam));
 }
 
+
+void KeyboardHook::registerHook()
+{
+	// Install the low-level keyboard hook
+	hhkLowLevelKybd = SetWindowsHookEx(WH_KEYBOARD_LL, KeyboardHook::LowLevelKeyboardProc, 0, 0);
+}
+
+void KeyboardHook::unregisterHook()
+{
+	//Unhook keyboard
+	UnhookWindowsHookEx(hhkLowLevelKybd);
+}
 
 bool KeyboardHook::isActive() {
 	if (!GetMessage(&msg, NULL, NULL, NULL)) {

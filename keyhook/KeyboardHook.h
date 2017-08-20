@@ -21,14 +21,15 @@
 
 class KeyboardHook
 {
-public:	
-	static KeyboardHook& getInstance();
-
-
+public:
+	void registerHook();
+	void unregisterHook();
 	bool isActive();
-	~KeyboardHook();
+	static KeyboardHook& getInstance();
+	
 private:
 	KeyboardHook();
+	~KeyboardHook();
 	
 
 	//Higher level Keyup/Keydown methods.
@@ -41,8 +42,5 @@ private:
 	//Private keyboard hook variables.
 	HHOOK hhkLowLevelKybd;
 	MSG msg;
-
-	//Singleton instance variable.
-	static KeyboardHook* mInstance;
 };
 
