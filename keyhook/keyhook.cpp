@@ -20,11 +20,14 @@ int main()
 	//Add observer to keyboardhook
 
 	auto upObs = [&](DWORD vk, DWORD sc) {
-		std::cout << "I'm an observer! (up) VK: " << vk << ", SC: " << sc << std::endl;
+		std::cout << "Up Observer. Pressed key: " << (char)vk << std::endl;
+		KeyboardState state = KeyboardHook::getInstance().getModifierState();
+		//Dump the modifier keys
+		state.Dump();
 	};
 
 	auto downObs = [&](DWORD vk, DWORD sc) {
-		std::cout << "I'm an observer! (down) VK: " << vk << ", SC: " << sc << std::endl;
+		//std::cout << "I'm an observer! (down) VK: " << vk << ", SC: " << sc << std::endl;
 	};
 	KeyboardHook::getInstance().AddKeyObserver(KeyEventType::DOWN,downObs);
 	KeyboardHook::getInstance().AddKeyObserver(KeyEventType::UP, upObs);

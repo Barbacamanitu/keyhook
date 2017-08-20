@@ -147,12 +147,16 @@
   <ItemGroup>
     <ClInclude Include="KeyboardHook.h" />
     <ClInclude Include="KeyboardState.h" />
+    <ClInclude Include="KeyboardUtil.h" />
+    <ClInclude Include="Logger.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="KeyboardHook.cpp" />
+    <ClCompile Include="KeyboardUtil.cpp" />
     <ClCompile Include="keyhook.cpp" />
+    <ClCompile Include="Logger.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

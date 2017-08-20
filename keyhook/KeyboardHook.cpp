@@ -4,14 +4,20 @@
 
 
 void KeyboardHook::Keydown(DWORD virtualKey, DWORD scanCode){
+	//Set keyboard state for modifier keys
+	KeyboardUtil::UpdateKeyboardState(&mKeyboardState, virtualKey, true);
+
+	//Execute all observers of this event.
 	for (auto f : mKeyObserverMap[KeyEventType::DOWN]) {
 		f(virtualKey, scanCode);
 	}
 }
 
 void KeyboardHook::Keyup(DWORD virtualKey, DWORD scanCode){
-	//std::cout << "Keyup!" << std::endl;
-	//Iterate through all observers and execute them with the correct key info.
+	//Set keyboard state for modifier keys
+	KeyboardUtil::UpdateKeyboardState(&mKeyboardState, virtualKey, false);
+
+	//Execute all observers of this event.
 	for (auto f : mKeyObserverMap[KeyEventType::UP]) {
 		f(virtualKey, scanCode);
 	}
@@ -28,6 +34,11 @@ KeyboardHook& KeyboardHook::getInstance()
 void KeyboardHook::AddKeyObserver(KeyEventType eventType, KeyEventObserver observer)
 {
 	mKeyObserverMap[eventType].push_back(observer);
+}
+
+KeyboardState KeyboardHook::getModifierState()
+{
+	return mKeyboardState;
 }
 
 //Constructor.

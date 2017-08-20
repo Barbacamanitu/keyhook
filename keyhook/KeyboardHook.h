@@ -4,6 +4,8 @@
 #include <vector>
 #include <functional>
 #include <map>
+#include "KeyboardState.h"
+#include "KeyboardUtil.h"
 /*
 	This class is a Singleton because it makes use of a system wide callback, so
 	only one instance of this class may exist.
@@ -36,11 +38,12 @@ public:
 	void unregisterHook();
 	static KeyboardHook& getInstance();
 	void AddKeyObserver(KeyEventType eventType, KeyEventObserver observer);
+	KeyboardState getModifierState();
 private:
 	KeyboardHook();
 	~KeyboardHook();
 
-	
+	KeyboardState mKeyboardState;
 	//Event dispatch related
 	KeyObserverMap mKeyObserverMap;
 
