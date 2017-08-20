@@ -24,7 +24,6 @@ class KeyboardHook
 public:
 	void registerHook();
 	void unregisterHook();
-	bool isActive();
 	static KeyboardHook& getInstance();
 	
 private:

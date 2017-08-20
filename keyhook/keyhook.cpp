@@ -10,14 +10,32 @@
 
 int main()
 {
-
+	MSG msg;
+	BOOL bRet;
 	KeyboardHook::getInstance().registerHook();
-	while (KeyboardHook::getInstance().isActive()) {
 
+	
+
+	while ((bRet = GetMessage(&msg, NULL, 0, 0)) != 0)
+	{
+			if (bRet == -1)
+			{
+				// handle the error and possibly exit
+				int a = 1;
+			}
+			else
+			{
+				TranslateMessage(&msg);
+				DispatchMessage(&msg);
+			}
 	}
 	KeyboardHook::getInstance().unregisterHook();
 
+
 	std::cout << "Done" << std::endl;
 	system("pause");
-	return(0);
+	// Return the exit code to the system. 
+
+	return msg.wParam;
+	//return(0);
 }

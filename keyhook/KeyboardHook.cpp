@@ -71,15 +71,3 @@ void KeyboardHook::unregisterHook()
 	//Unhook keyboard
 	UnhookWindowsHookEx(hhkLowLevelKybd);
 }
-
-bool KeyboardHook::isActive() {
-	if (!GetMessage(&msg, NULL, NULL, NULL)) {
-		TranslateMessage(&msg);
-		DispatchMessage(&msg);
-		return true;
-	}
-	else
-	{
-		return false;
-	}
-}
