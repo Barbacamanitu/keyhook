@@ -3,6 +3,7 @@
 #include <iostream>
 #include <vector>
 #include <functional>
+#include <map>
 /*
 	This class is a Singleton because it makes use of a system wide callback, so
 	only one instance of this class may exist.
@@ -20,6 +21,13 @@
 
 */
 
+enum KeyEventType {
+	DOWN, UP
+};
+
+typedef std::function<void(DWORD, DWORD)> KeyEventObserver;
+typedef std::vector<KeyEventObserver> KeyEventObserverList;
+typedef std::map<KeyEventType, KeyEventObserverList> KeyObserverMap;
 
 class KeyboardHook
 {
@@ -27,14 +35,14 @@ public:
 	void registerHook();
 	void unregisterHook();
 	static KeyboardHook& getInstance();
-	std::vector<std::function<void(DWORD, DWORD)>> keyUpObservers;
+	void AddKeyObserver(KeyEventType eventType, KeyEventObserver observer);
 private:
 	KeyboardHook();
 	~KeyboardHook();
 
-	std::vector<std::function<void(DWORD, DWORD)>> keyDownObservers;
 	
-
+	//Event dispatch related
+	KeyObserverMap mKeyObserverMap;
 
 	//Higher level Keyup/Keydown methods.
 	void Keydown(DWORD virtualKey, DWORD scanCode);

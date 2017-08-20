@@ -4,13 +4,15 @@
 
 
 void KeyboardHook::Keydown(DWORD virtualKey, DWORD scanCode){
-	std::cout << "Keydown!" << std::endl;
+	for (auto f : mKeyObserverMap[KeyEventType::DOWN]) {
+		f(virtualKey, scanCode);
+	}
 }
 
 void KeyboardHook::Keyup(DWORD virtualKey, DWORD scanCode){
 	//std::cout << "Keyup!" << std::endl;
 	//Iterate through all observers and execute them with the correct key info.
-	for (auto f : keyUpObservers) {
+	for (auto f : mKeyObserverMap[KeyEventType::UP]) {
 		f(virtualKey, scanCode);
 	}
 }
@@ -23,8 +25,14 @@ KeyboardHook& KeyboardHook::getInstance()
 	return instance;
 }
 
+void KeyboardHook::AddKeyObserver(KeyEventType eventType, KeyEventObserver observer)
+{
+	mKeyObserverMap[eventType].push_back(observer);
+}
+
 //Constructor.
 KeyboardHook::KeyboardHook() {
+
 }
 
 //Destructor.

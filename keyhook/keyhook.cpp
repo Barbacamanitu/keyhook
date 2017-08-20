@@ -18,9 +18,16 @@ int main()
 	std::cout << "Hook Registered." << std::endl;	
 
 	//Add observer to keyboardhook
-	KeyboardHook::getInstance().keyUpObservers.push_back([&](DWORD vk, DWORD sc) {
-		std::cout << "I'm an observer! VK: " << vk << ", SC: " << sc << std::endl;
-	});
+
+	auto upObs = [&](DWORD vk, DWORD sc) {
+		std::cout << "I'm an observer! (up) VK: " << vk << ", SC: " << sc << std::endl;
+	};
+
+	auto downObs = [&](DWORD vk, DWORD sc) {
+		std::cout << "I'm an observer! (down) VK: " << vk << ", SC: " << sc << std::endl;
+	};
+	KeyboardHook::getInstance().AddKeyObserver(KeyEventType::DOWN,downObs);
+	KeyboardHook::getInstance().AddKeyObserver(KeyEventType::UP, upObs);
 
 
 
